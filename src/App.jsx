@@ -3,9 +3,9 @@ import { Lab1 } from './pages/lab1/lab1';
 import MainLinks from './components/MainLinks';
 function App() {
 	return (
-		<BrowserRouter basename='/AMO-Labs'>
+		<BrowserRouter basename='/AMO'>
 			<div className='container my-8 mx-auto'>
-				<Link to={"/"} className='text-xl font-bold block text-center'>АМО Лабораторні , Грицюк Максим ІО-02</Link>
+				<Link to="/" className='text-xl font-bold block text-center'>АМО Лабораторні , Грицюк Максим ІО-02</Link>
 				<MainLinks />
 				<Routes>
 					<Route path='/lab1' element={<Lab1 />} />

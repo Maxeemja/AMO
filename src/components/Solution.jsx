@@ -9,7 +9,7 @@ export const Solution = ({ taskImg, schema, result, formik }) => {
 			</div>
 
 			<form className='flex gap-10' onSubmit={formik.handleSubmit}>
-				<div className='flex flex-col gap-5'>
+				<div className='flex flex-col gap-5 justify-center'>
 					<h2 className='text-center my-4 text-xl'>Задайте значення</h2>
 					{Object.entries(formik.values).map(([key, value]) => {
 						console.log(key, value);
@@ -34,9 +34,9 @@ export const Solution = ({ taskImg, schema, result, formik }) => {
 					</Button>
 				</div>
 			</form>
-			<div className='w-1/4'>
+			<div className='max-w-xl'>
 				<p>Блок-схема</p>
-				<img src={schema} alt='' />
+				<img className='object-cover' src={schema} alt='' />
 			</div>
 		</div>
 	);
