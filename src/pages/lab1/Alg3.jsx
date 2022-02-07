@@ -12,7 +12,11 @@ export const Alg3 = () => {
 			b: '',
 			p: ''
 		},
-		onSubmit: ({ a, b, p, k }) => {
+		onSubmit: ({ a, b, p }) => {
+      if (p <= 0) {
+        formik.resetForm();
+        return alert('р не може бути від`ємним!')
+      }
 			let summ = 0;
 			for (let i = 1; i < p; i++) {
 				for (let j = 1; j < p; j++) {
@@ -22,6 +26,7 @@ export const Alg3 = () => {
 				}
 			}
 			setResult(summ.toFixed(3));
+      formik.resetForm();
 		}
 	});
 
