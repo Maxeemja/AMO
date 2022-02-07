@@ -1,18 +1,18 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Lab1 } from './pages/lab1/lab1';
 import MainLinks from './components/MainLinks';
 function App() {
 	return (
-		<BrowserRouter basename='/'>
+		<BrowserRouter basename='/AMO-Labs'>
 			<div className='container my-8 mx-auto'>
-				<p className='text-xl font-bold text-center'>АМО Лабораторні , Грицюк Максим ІО-02</p>
+				<Link to={"/"} className='text-xl font-bold block text-center'>АМО Лабораторні , Грицюк Максим ІО-02</Link>
 				<MainLinks />
 				<Routes>
-					<Route exact path='/lab1' element={<Lab1 />} />
+					<Route path='/lab1' element={<Lab1 />} />
 					<Route path='/lab2' element={<div>laba2</div>} />
-					<Route path='/lab3' element={<Lab1 />} />
-					<Route path='/lab4' element={<Lab1 />} />
-					<Route path='/lab5' element={<Lab1 />} />
+					<Route path='/lab3' element={null} />
+					<Route path='/lab4' element={null} />
+					<Route path='/lab5' element={null} />
 				</Routes>
 			</div>
 		</BrowserRouter>
