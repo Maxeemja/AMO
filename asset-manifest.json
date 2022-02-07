@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/AMO/static/css/main.97c91007.css",
+    "main.js": "/AMO/static/js/main.a9ec5f0c.js",
+    "static/media/schema1.jpg": "/AMO/static/media/schema1.a4d13bfbcf070fde6861.jpg",
+    "static/media/task2.png": "/AMO/static/media/task2.7060c3c23fe65703482b.png",
+    "index.html": "/AMO/index.html",
+    "main.97c91007.css.map": "/AMO/static/css/main.97c91007.css.map",
+    "main.a9ec5f0c.js.map": "/AMO/static/js/main.a9ec5f0c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.97c91007.css",
+    "static/js/main.a9ec5f0c.js"
+  ]
+}
