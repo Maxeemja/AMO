@@ -11,13 +11,14 @@ export const Alg2 = () => {
 			c: '',
 			k: ''
 		},
-		onSubmit: ({ a, b, c, k }) => {
+		onSubmit: ({ a, c, k }) => {
+			if (!a || !c || !k) return alert('Не всі дані введені!');
 			if (k < 10) {
 				formik.resetForm();
-				setResult((Math.pow(a + c, 4) + Math.pow((a - c), 2)).toFixed(3));
+				setResult((Math.pow(a + c, 4) + Math.pow(a - c, 2)).toFixed(3));
 			} else {
 				formik.resetForm();
-				setResult((Math.pow(a - c, 3) + Math.pow((a + c), 2)).toFixed(3));
+				setResult((Math.pow(a - c, 3) + Math.pow(a + c, 2)).toFixed(3));
 			}
 		}
 	});

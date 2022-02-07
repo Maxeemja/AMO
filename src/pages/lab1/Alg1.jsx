@@ -13,10 +13,7 @@ export const Alg1 = () => {
 			d: ''
 		},
 		onSubmit: ({ a, b, c, d }) => {
-			if (!a || !b || !c || !d) {
-				formik.resetForm();
-				return alert('Перевірте введені дані!');
-			}
+			if(!a || !b || !c || !d) return alert('Не всі дані введені!');
 
 			if (a < 0 || b < 0 || c < 0 || d < 0) {
 				formik.resetForm();
