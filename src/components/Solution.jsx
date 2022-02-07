@@ -36,9 +36,9 @@ export const Solution = ({ taskImg, schema, result, formik }) => {
 					</div>
 				</div>
 			</form>
-			<div className=''>
-				<p>Блок-схема</p>
-				<img className='object-cover' src={schema} alt='' />
+			<div className='flex flex-col justify-center items-center'>
+				<p className='mb-5'>Блок-схема</p>
+				<img className='object-cover max-h-[650px]' src={schema} alt='' />
 			</div>
 		</div>
 	);
