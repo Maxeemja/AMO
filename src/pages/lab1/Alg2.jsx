@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import taskImg from '../../assets/lab1/task2.png';
 import schema from '../../assets/lab1/schema2.png';
-import { Solution } from '../../components/Solution';
+import { Solution } from './Solution';
 export const Alg2 = () => {
 	const [result, setResult] = useState();
 	const formik = useFormik({

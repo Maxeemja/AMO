@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { Lab1 } from './pages/lab1/lab1';
 import MainLinks from './components/MainLinks';
+import { Lab1 } from './pages/lab1/lab1';
+import { Lab2 } from './pages/lab2/lab2';
 function App() {
 	return (
 		<BrowserRouter basename='/AMO'>
@@ -9,7 +10,7 @@ function App() {
 				<MainLinks />
 				<Routes>
 					<Route path='/lab1' element={<Lab1 />} />
-					<Route path='/lab2' element={<div>laba2</div>} />
+					<Route path='/lab2' element={<Lab2/>} />
 					<Route path='/lab3' element={null} />
 					<Route path='/lab4' element={null} />
 					<Route path='/lab5' element={null} />
