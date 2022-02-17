@@ -4,15 +4,30 @@ import { useState } from 'react';
 import taskImg from '../../assets/lab2/taskImg.png';
 import schema from '../../assets/lab2/schema.png';
 import { BubbleSort } from './boostedBubbleSort';
-import { Button, TextField } from '@mui/material';
+import { Button, Input, TextField } from '@mui/material';
 
 export const Lab2 = () => {
 	const [result, setResult] = useState();
+	const handleFile = (e) => {
+		formik.handleChange(e);
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			if (e.target) {
+				console.log(e.target);
+			}
+			const text = e.target.result;
+			formik.setFieldValue('input', text);
+		};
+		reader.readAsText(e.target.files[0]);
+		setResult(null);
+	};
 	const formik = useFormik({
 		initialValues: {
-			input: ''
+			input: '',
+			fileInput: ''
 		},
 		onSubmit: ({ input }) => {
+			console.log(input);
 			if (!input.length) {
 				setResult(null);
 				return alert('Ви не ввели дані!');
@@ -58,6 +73,21 @@ export const Lab2 = () => {
 								value={formik.values.input}
 								onChange={formik.handleChange}
 							/>
+							<p>або</p>
+							<Button variant='contained' color='info'>
+								<label htmlFor='fileInput'>
+									Виберіть файл
+									<input
+										type='file'
+										accept='.txt'
+										id='fileInput'
+										value={formik.values.fileInput}
+										onChange={handleFile}
+										placeholder='Виберіть файл...'
+										hidden
+									/>
+								</label>
+							</Button>
 
 							<Button variant='contained' color='success' type='submit'>
 								Результат!
