@@ -103,7 +103,7 @@ export default function Graph({ formula }) {
 					<div>
 						<p>Графік інтерполяції</p>
 						<XYPlot width={450} height={450}>
-							<XAxis />
+							<XAxis on0/>
 							<YAxis />
 							<LineSeries data={arr} color='red' />
 							<LineSeries data={interpArr} color='green' />
@@ -112,7 +112,7 @@ export default function Graph({ formula }) {
 					<div>
 						<p>Графік похибки</p>
 						<XYPlot width={450} height={450}>
-							<XAxis />
+							<XAxis on0/>
 							<YAxis />
 							<LineSeries data={errArr} color='blue' />
 						</XYPlot>
