@@ -1,11 +1,12 @@
 import { XYPlot, XAxis, YAxis, LineSeries } from 'react-vis';
-import { sinX, variant } from './utils';
+import { variant } from './utils';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { Button, TextField } from '@mui/material';
 export default function Graph({ formula }) {
 	const [arr, setArr] = useState([]);
 	const [interpArr, setInterpArr] = useState([]);
+	const [errArr, setErrArr] = useState([]);
 	const handleFile = (e) => {
 		formik.handleChange(e);
 		const reader = new FileReader();
@@ -30,17 +31,19 @@ export default function Graph({ formula }) {
 			fileInput1: ''
 		},
 		onSubmit: ({ a, a1, b1, n1, b, n }) => {
+			if((a > b) || (a1 > b1)) return alert('Неправильно задані границі!')
 			if (formula === 'sin') {
 				if (n <= 0 || n > 25) return alert('Неправильне значення n');
-				const [sin_arr, interp_sin_arr] = sinX(a, b, n);
-
+				const [sin_arr, interp_sin_arr, err_arr] = variant(a, b, n, 'sin');
 				setArr(sin_arr);
 				setInterpArr(interp_sin_arr);
+				setErrArr(err_arr);
 			} else {
 				if (n1 <= 0 || n1 > 25) return alert('Неправильне значення n');
-				const [var_arr, interp_var_arr] = variant(a1, b1, n1);
+				const [var_arr, interp_var_arr, err_arr] = variant(a1, b1, n1, 'var');
 				setArr(var_arr);
 				setInterpArr(interp_var_arr);
+				setErrArr(err_arr);
 			}
 			formik.resetForm();
 		}
@@ -96,13 +99,24 @@ export default function Graph({ formula }) {
 				</div>
 			</form>
 			{arr.length ? (
-				<div className='flex justify-center mt-4'>
-					<XYPlot width={450} height={450}>
-						<XAxis />
-						<YAxis />
-						<LineSeries data={arr} color='red' />
-						<LineSeries data={interpArr} color='green' />
-					</XYPlot>
+				<div className='flex justify-center mt-4 gap-[50px]'>
+					<div>
+						<p>Графік інтерполяції</p>
+						<XYPlot width={450} height={450}>
+							<XAxis />
+							<YAxis />
+							<LineSeries data={arr} color='red' />
+							<LineSeries data={interpArr} color='green' />
+						</XYPlot>
+					</div>
+					<div>
+						<p>Графік похибки</p>
+						<XYPlot width={450} height={450}>
+							<XAxis />
+							<YAxis />
+							<LineSeries data={errArr} color='blue' />
+						</XYPlot>
+					</div>
 				</div>
 			) : null}
 		</>

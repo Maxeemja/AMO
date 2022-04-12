@@ -15,6 +15,8 @@ export default function Lab3() {
 					</strong>
 					<Graph formula="sin"/>
 				</div>
+
+				<hr />
 				<div className='text-center'>
 					<strong className='my-5 text-xl text-center'>
 						Інтерполяція многочленом Ньютона для cos(x - e<sup>cos x</sup>)
