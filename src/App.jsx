@@ -4,6 +4,7 @@ import { Lab1 } from './pages/lab1/lab1';
 import { Lab2 } from './pages/lab2/lab2';
 import Lab3 from './pages/lab3/lab3';
 import Lab4 from './pages/lab4/lab4';
+import  Lab5  from './pages/lab5/lab5';
 function App() {
 	return (
 		<BrowserRouter basename='/AMO'>
@@ -17,7 +18,7 @@ function App() {
 					<Route path='/lab2' element={<Lab2 />} />
 					<Route path='/lab3' element={<Lab3 />} />
 					<Route path='/lab4' element={<Lab4 />} />
-					<Route path='/lab5' element={null} />
+					<Route path='/lab5' element={<Lab5 />} />
 				</Routes>
 			</div>
 		</BrowserRouter>

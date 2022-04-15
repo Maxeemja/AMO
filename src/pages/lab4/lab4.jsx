@@ -15,35 +15,36 @@ import { getResult, draw_graph } from './calculating';
 import taskImg from '../../assets/lab4/taskImg.png';
 export default function Lab4() {
 	const [data, setData] = useState([]);
-  const [tangent, setTangent] = useState([])
-  const [result, setResult] = useState({})
+	const [tangent, setTangent] = useState([]);
+	const [result, setResult] = useState({});
 	const handleFile = (e) => {
-		formik.handleChange(e);
 		const reader = new FileReader();
 		reader.onload = (e) => {
 			const text = e.target.result.split(' ');
-			formik.setFieldValue('a', text[0]);
-			formik.setFieldValue('b', text[1]);
-			formik.setFieldValue('e', text[2]);
+			let res = Object.keys(formik.values).map((k, i) => {
+				return Object.fromEntries([[k, text[i]]]);
+			});
+			formik.setValues(Object.assign(...res));
 		};
 		reader.readAsText(e.target.files[0]);
+		document.forms[0].fileInput.value = '';
 	};
 	const formik = useFormik({
 		initialValues: {
 			a: '',
 			b: '',
-			e: '',
-      fileInput: ''
+			e: ''
 		},
 		onSubmit: ({ a, b, e }) => {
-      if(a < 0 || b < 0 || e < 0) return alert('Дані не можуть бути менше 0!')
-      if(e.indexOf(',') !== -1) return alert('Введіть точність через крапку')
-      const [count, x] = getResult(a, b, e);
+			if(!a || !b || !e) return alert('Не всі дані введені!')
+			if (a < 0 || b < 0 || e < 0) return alert('Дані не можуть бути менше 0!');
+			if (e.indexOf(',') !== -1) return alert('Введіть точність через крапку');
+			const [count, x] = getResult(a, b, e);
 			const [dataArr, tangentArr] = draw_graph();
-      setData(dataArr)
-      setTangent(tangentArr)
-      setResult({x, count})
-      formik.resetForm()
+			setData(dataArr);
+			setTangent(tangentArr);
+			setResult({ x, count });
+			formik.resetForm();
 		}
 	});
 	return (
@@ -58,40 +59,18 @@ export default function Lab4() {
 				<form className='mt-5' onSubmit={formik.handleSubmit}>
 					<div className='flex flex-col justify-center gap-5 items-center'>
 						<div className='flex justify-between gap-5'>
-							<TextField
-								id='a'
-								fullWidth
-								label={`Введіть число а`}
-								type='number'
-								value={formik.values.a}
-								onChange={formik.handleChange}
-							/>
-							<TextField
-								id='b'
-								fullWidth
-								label={`Введіть число b`}
-								type='number'
-								value={formik.values.b}
-								onChange={formik.handleChange}
-							/>
-							<TextField
-								id='e'
-								fullWidth
-								label={`Введіть число e`}
-								type='text'
-								value={formik.values.e}
-								onChange={formik.handleChange}
-							/>
+							<TextField label={`Введіть число а`} type='number' {...formik.getFieldProps('a')} />
+							<TextField label={`Введіть число b`} type='number' {...formik.getFieldProps('b')} />
+							<TextField label={`Введіть число e`} type='text' {...formik.getFieldProps('e')} />
 						</div>
 						<p>або</p>
 						<Button variant='contained' color='info'>
 							<label htmlFor='fileInput'>
 								Виберіть файл
 								<input
+									id='fileInput'
 									type='file'
 									accept='.txt'
-									id='fileInput'
-									value={formik.values.fileInput}
 									onChange={handleFile}
 									placeholder='Виберіть файл...'
 									hidden
@@ -101,12 +80,13 @@ export default function Lab4() {
 						<Button variant='contained' color='success' type='submit'>
 							Результат!
 						</Button>
-            <hr className="bg-black w-full" />
-            {result.x ? 
-              <div className="text-lg">
-                х = {result.x.toFixed(3)} <br />
-                Кількість ітерацій: {result.count}  
-              </div> : null}
+						<hr className='bg-black w-full' />
+						{result.x ? (
+							<div className='text-lg'>
+								х = {result.x.toFixed(3)} <br />
+								Кількість ітерацій: {result.count}
+							</div>
+						) : null}
 					</div>
 				</form>
 				{data.length ? (

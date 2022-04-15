@@ -11,13 +11,17 @@ export default function Graph({ formula }) {
 		formik.handleChange(e);
 		const reader = new FileReader();
 		reader.onload = (e) => {
-			const text = e.target.result;
-			const inp = text.split(' ');
-			formik.setFieldValue(formula === 'sin' ? 'a' : 'a1', +inp[0]);
-			formik.setFieldValue(formula === 'sin' ? 'b' : 'b1', +inp[1]);
-			formik.setFieldValue(formula === 'sin' ? 'n' : 'n1', +inp[2]);
+			const text = e.target.result.split(' ');
+			const res = Object.keys(formik.values)
+				.filter((k, i) => (formula === 'sin' ? i % 2 === 0 : i % 2 > 0))
+				.map((key, i) => {
+					return Object.fromEntries([[key, text[i]]]);
+				});
+			formik.setValues(Object.assign(...res));
 		};
 		reader.readAsText(e.target.files[0]);
+		document.forms[0].fileInput.value = '';
+		// document.forms[0].fileInput1.value = '';
 	};
 	const formik = useFormik({
 		initialValues: {
@@ -26,25 +30,16 @@ export default function Graph({ formula }) {
 			b: '',
 			b1: '',
 			n: '',
-			n1: '',
-			fileInput: '',
-			fileInput1: ''
+			n1: ''
 		},
 		onSubmit: ({ a, a1, b1, n1, b, n }) => {
-			if((a > b) || (a1 > b1)) return alert('Неправильно задані границі!')
-			if (formula === 'sin') {
-				if (n <= 0 || n > 25) return alert('Неправильне значення n');
-				const [sin_arr, interp_sin_arr, err_arr] = variant(a, b, n, 'sin');
-				setArr(sin_arr);
-				setInterpArr(interp_sin_arr);
-				setErrArr(err_arr);
-			} else {
-				if (n1 <= 0 || n1 > 25) return alert('Неправильне значення n');
-				const [var_arr, interp_var_arr, err_arr] = variant(a1, b1, n1, 'var');
-				setArr(var_arr);
-				setInterpArr(interp_var_arr);
-				setErrArr(err_arr);
-			}
+			if ((!a || !b || !n) && (!a1 || !b1 || !n1)) return alert('Ви ввели не всі дані!')
+			if (a > b || a1 > b1) return alert('Неправильно задані границі!');
+			if ([n, n1].filter((el) => el && (el > 25 || el <= 0)).length) return alert('Неправильне значення n');
+			const [arrr, interp_arr, err_arr] = variant(formula === 'sin' ? [a, b, n, 'sin'] : [a1, b1, n1, 'var']);
+			setArr(arrr);
+			setInterpArr(interp_arr);
+			setErrArr(err_arr);
 			formik.resetForm();
 		}
 	});
@@ -54,28 +49,19 @@ export default function Graph({ formula }) {
 				<div className='flex flex-col justify-center gap-5 items-center'>
 					<div className='flex justify-between gap-5'>
 						<TextField
-							id={formula === 'sin' ? 'a' : 'a1'}
-							fullWidth
 							label={`Введіть число а`}
 							type='number'
-							value={formula === 'sin' ? formik.values.a : formik.values.a1}
-							onChange={formik.handleChange}
+							{...formik.getFieldProps(formula === 'sin' ? 'a' : 'a1')}
 						/>
 						<TextField
-							id={formula === 'sin' ? 'b' : 'b1'}
-							fullWidth
 							label={`Введіть число b`}
 							type='number'
-							value={formula === 'sin' ? formik.values.b : formik.values.b1}
-							onChange={formik.handleChange}
+							{...formik.getFieldProps(formula === 'sin' ? 'b' : 'b1')}
 						/>
 						<TextField
-							id={formula === 'sin' ? 'n' : 'n1'}
-							fullWidth
 							label={`Введіть число n`}
 							type='number'
-							value={formula === 'sin' ? formik.values.n : formik.values.n1}
-							onChange={formik.handleChange}
+							{...formik.getFieldProps(formula === 'sin' ? 'n' : 'n1')}
 						/>
 					</div>
 					<p>або</p>
@@ -86,7 +72,6 @@ export default function Graph({ formula }) {
 								type='file'
 								accept='.txt'
 								id={formula === 'sin' ? 'fileInput' : 'fileInput1'}
-								value={formula === 'sin' ? formik.values.fileInput : formik.values.fileInput1}
 								onChange={handleFile}
 								placeholder='Виберіть файл...'
 								hidden
@@ -103,7 +88,7 @@ export default function Graph({ formula }) {
 					<div>
 						<p>Графік інтерполяції</p>
 						<XYPlot width={450} height={450}>
-							<XAxis on0/>
+							<XAxis on0 />
 							<YAxis />
 							<LineSeries data={arr} color='red' />
 							<LineSeries data={interpArr} color='green' />
@@ -112,7 +97,7 @@ export default function Graph({ formula }) {
 					<div>
 						<p>Графік похибки</p>
 						<XYPlot width={450} height={450}>
-							<XAxis on0/>
+							<XAxis on0 />
 							<YAxis />
 							<LineSeries data={errArr} color='blue' />
 						</XYPlot>

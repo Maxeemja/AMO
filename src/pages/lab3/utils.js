@@ -7,10 +7,10 @@ function divided_difference(arr_x, arr_y, n) {
 			if (i === j) {
 				continue;
 			}
-			
+
 			key *= arr_x[i] - arr_x[j];
 		}
-		div_dif += key ** (-1) * arr_y[i];
+		div_dif += key ** -1 * arr_y[i];
 	}
 	return div_dif;
 }
@@ -23,7 +23,7 @@ function newton_polinome(arr_x, arr_y, interp_arr_x) {
 			let key = divided_difference(arr_x, arr_y, i + 1);
 			if (i !== 0) {
 				for (let j = 0; j < i; j++) {
-					key *= (x - arr_x[j]);
+					key *= x - arr_x[j];
 				}
 			}
 			monomial += key;
@@ -33,7 +33,7 @@ function newton_polinome(arr_x, arr_y, interp_arr_x) {
 	return interp_arr_y;
 }
 
-export function variant(a, b, n, formula) {
+export function variant([a, b, n, formula]) {
 	let arr_x, arr_y, interp_arr_y, varArr, nodes_x, nodes_y;
 	arr_x = linspace(a, b, 500);
 	nodes_x = linspace(a, b, n);
@@ -41,7 +41,8 @@ export function variant(a, b, n, formula) {
 		arr_y = arr_x.map((el) => Math.sin(el));
 		nodes_y = nodes_x.map((el) => Math.sin(el));
 		varArr = arr_x.map((el, i) => ({ x: el, y: arr_y[i] }));
-	} else {
+	}
+	if (formula === 'var') {
 		arr_y = arr_x.map((x) => Math.cos(x + Math.exp(Math.cos(x))));
 		nodes_y = nodes_x.map((x) => Math.cos(x + Math.exp(Math.cos(x))));
 		varArr = arr_x.map((el, i) => ({ x: el, y: arr_y[i] }));
@@ -50,8 +51,8 @@ export function variant(a, b, n, formula) {
 	interp_arr_y = newton_polinome(nodes_x, nodes_y, arr_x);
 
 	const err = [];
-	for(let i = 0; i < interp_arr_y.length; i++) {
-		err.push(Math.abs(arr_y[i] - interp_arr_y[i]))
+	for (let i = 0; i < interp_arr_y.length; i++) {
+		err.push(Math.abs(arr_y[i] - interp_arr_y[i]));
 	}
 	const errArr = arr_x.map((x, i) => ({ x: x, y: err[i] }));
 
