@@ -36,7 +36,7 @@ export default function Lab4() {
 			e: ''
 		},
 		onSubmit: ({ a, b, e }) => {
-			if(!a || !b || !e) return alert('Не всі дані введені!')
+			if (!a || !b || !e) return alert('Не всі дані введені!');
 			if (a < 0 || b < 0 || e < 0) return alert('Дані не можуть бути менше 0!');
 			if (e.indexOf(',') !== -1) return alert('Введіть точність через крапку');
 			const [count, x] = getResult(a, b, e);
