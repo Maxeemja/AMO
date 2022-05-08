@@ -46,7 +46,7 @@ export const Lab2 = () => {
 	});
 	return (
 		<div>
-			<LabHeader num='2' topic='Обчислювальна складність алгоритмів сортування' />
+			<LabHeader num='2'>Обчислювальна складність алгоритмів сортування</LabHeader>
 			<strong className='my-5 text-left text-lg'>
 				Різновид прискореного сортування з початку до кінця
 			</strong>

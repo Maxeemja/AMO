@@ -1,16 +1,14 @@
 export const BubbleSort = (arr) => {
-  let swapped;
+	let swapped;
 	do {
 		swapped = false;
 		for (let j = 0; j < arr.length; j++) {
 			if (+arr[j] > +arr[j + 1]) {
-				let temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
+				[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
 				swapped = true;
 			}
 		}
-	} while (swapped) ;
+	} while (swapped);
 
-  return arr.join(', ');
+	return arr.join(', ');
 };
