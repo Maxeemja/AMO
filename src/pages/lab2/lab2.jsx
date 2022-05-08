@@ -4,7 +4,7 @@ import { useState } from 'react';
 import taskImg from '../../assets/lab2/taskImg.png';
 import schema from '../../assets/lab2/schema.png';
 import { BubbleSort } from './boostedBubbleSort';
-import { Button, Input, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 export const Lab2 = () => {
 	const [result, setResult] = useState();
