@@ -18,6 +18,7 @@ export default function Lab5() {
 		reader.readAsText(e.target.files[0]);
 		document.forms[0].fileInput.value = '';
 	};
+	
 	const formik = useFormik({
 		initialValues: {
 			a11: '',
